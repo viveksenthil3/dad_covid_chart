@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Charts</title>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <!--    JQuery cnd link-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <style>
+        .btns{
+            margin-bottom: 1.5em;
+        }
+    </style>
+
+
+    <div class="row">
+        <div class="col s3">
+            <div class="row" style="margin: 10em 0 0 0">
+                <div class="col s12 btns"><a class="btn" id="total-case-chart-btn">Total cases</a></div>
+                <div class="col s12 btns"><a class="btn" id="total-deaths-chart-btn">Total Deaths</a></div>
+                <div class="col s12 btns"><a class="btn" id="total-recovered-chart-btn">Total Recovered</a></div>
+                <div class="col s12 btns"><a class="btn" id="new-case-chart-btn">New Cases</a></div>
+            </div>
+        </div>
+
+        <div class="col s9">
+            <div class="container">
+                <canvas id="TOTALCASECHART"></canvas>
+                <canvas id="TOTALDEATHSCHART"></canvas>
+                <canvas id="TOTALRECOVEREDCHART"></canvas>
+                <canvas id="NEWCASESCHART"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(()=>{
+            hideAll();
+
+
+        })
+
+        const hideAll = ()=>{
+            $("#TOTALCASECHART").hide();
+            $("#TOTALDEATHSCHART").hide();
+            $("#TOTALRECOVEREDCHART").hide();
+            $("#NEWCASESCHART").hide();
+        }
+
+        $('#total-case-chart-btn').click((e)=>{
+            e.preventDefault();
+            hideAll();
+
+             $.ajax({
+                url: '/charts/totalCaseChart/',
+                method: 'POST',
+                success: (data)=>{
+                    $("#TOTALCASECHART").show();
+                    let ctx = document.getElementById('TOTALCASECHART').getContext('2d');
+
+                    window.myChart = new Chart(ctx, {
+                        'type' : 'line',
+                        'data' : data,
+                        'options' : {
+                    legend : {
+                        display : true,
+                        position : 'right'
+                    },
+                    responsive : true,
+                    title: { display: true, text: 'World Covid Status - Total Deaths' },
+                    tooltips: { mode: 'index', intersect: true },
+
+                    }
+                    });
+                }
+            })
+        })
+
+
+         $('#total-deaths-chart-btn').click((e)=>{
+            e.preventDefault();
+            hideAll();
+
+             $.ajax({
+                url: '/charts/totalDeathsChart/',
+                method: 'POST',
+                success: (data)=>{
+                    $("#TOTALDEATHSCHART").show();
+                    let ctx = document.getElementById('TOTALDEATHSCHART').getContext('2d');
+
+                   window.myChart = new Chart(ctx, {
+                        'type' : 'line',
+                        'data' : data,
+                        'options' : {
+                    legend : {
+                        display : true,
+                        position : 'right'
+                    },
+                    responsive : true,
+                    title: { display: true, text: 'World Covid Status - Total Deaths' },
+                    tooltips: { mode: 'index', intersect: true },
+
+                    }
+                    });
+                }
+            })
+        })
+
+
+         $('#total-recovered-chart-btn').click((e)=>{
+            e.preventDefault();
+            hideAll();
+
+             $.ajax({
+                url: '/charts/totalRecoveredChart/',
+                method: 'POST',
+                success: (data)=>{
+                    $("#TOTALRECOVEREDCHART").show();
+                    let ctx = document.getElementById('TOTALRECOVEREDCHART').getContext('2d');
+
+                   window.myChart = new Chart(ctx, {
+                        'type' : 'line',
+                        'data' : data,
+                        'options' : {
+                    legend : {
+                        display : true,
+                        position : 'right'
+                    },
+                    responsive : true,
+                    title: { display: true, text: 'World Covid Status - Total Recovered' },
+                    tooltips: { mode: 'index', intersect: true },
+
+                    }
+                    });
+                }
+            })
+        })
+
+
+         $('#new-case-chart-btn').click((e)=>{
+            e.preventDefault();
+            hideAll();
+
+             $.ajax({
+                url: '/charts/totalCaseChart/',
+                method: 'POST',
+                success: (data)=>{
+                    $("#NEWCASESCHART").show();
+                    let ctx = document.getElementById('NEWCASESCHART').getContext('2d');
+
+                    window.myChart = new Chart(ctx, {
+                        'type' : 'line',
+                        'data' : data,
+                        'options' : {
+                    legend : {
+                        display : true,
+                        position : 'right'
+                    },
+                    responsive : true,
+                    title: { display: true, text: 'World Covid Status - New Cases' },
+                    tooltips: { mode: 'index', intersect: true },
+
+                    }
+                    });
+                }
+            })
+        })
+
+    </script>
+</body>
+</html>
